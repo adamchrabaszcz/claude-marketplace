@@ -1,0 +1,15 @@
+{
+  "name": "Adam's Claude Marketplace",
+  "owner": {
+    "name": "Adam Chrabaszcz",
+    "email": "adam@chrabaszcz.pl",
+    "url": "https://github.com/adamchrabaszcz"
+  },
+  "plugins": [
+    {
+      "name": "claude-symfony-plugin",
+      "source": "./plugins/claude-symfony-plugin",
+      "description": "Claude Code plugin for Symfony 7.x development with specialized agents"
+    }
+  ]
+}
