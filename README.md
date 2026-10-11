@@ -15,12 +15,33 @@ A comprehensive Claude Code plugin for Symfony 7.x development featuring:
 claude /install-plugin https://github.com/adamchrabaszcz/claude-marketplace/plugins/claude-symfony-plugin
 ```
 
+### github-steward
+
+Sets GitHub repositories up and keeps work in them tidy. Language-agnostic; uses the `gh` CLI.
+
+- **deliver** skill: the working loop for any change.
+  - A plan first, approved by you.
+  - An issue for every task, and one branch and one small PR per change, each from the latest `main` and mergeable on its own.
+  - Checks and a self-review before committing; Conventional Commits; PRs that close their issue.
+  - A test merge of all open PRs before reporting back.
+- **onboard** skill (coming): checks a repository and sets up what's missing:
+  - AGENTS.md, docs, CONTRIBUTING.md and README;
+  - labels, sidebar and branch protection;
+  - CI with coverage, and releases from Conventional Commits.
+
+**Installation:**
+```
+/plugin marketplace add adamchrabaszcz/claude-marketplace
+/plugin install github-steward@adams-claude-marketplace
+```
+
 ## Structure
 
 ```
 claude-marketplace/
 ├── plugins/
-│   └── claude-symfony-plugin/    # Symfony 7.x development plugin
+│   ├── claude-symfony-plugin/    # Symfony 7.x development plugin
+│   └── github-steward/           # GitHub repo setup and workflow (skills)
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       └── agents/

@@ -10,6 +10,11 @@
       "name": "claude-symfony-plugin",
       "source": "./plugins/claude-symfony-plugin",
       "description": "Claude Code plugin for Symfony 7.x development with specialized agents"
+    },
+    {
+      "name": "github-steward",
+      "source": "./plugins/github-steward",
+      "description": "Sets GitHub repositories up and keeps work in them tidy: plan first, an issue for every task, one small PR per change, Conventional Commits, checks before every report."
     }
   ]
 }
