@@ -1,5 +1,5 @@
 {
-  "name": "claude-symfony-plugin",
+  "name": "symfony-developer",
   "description": "Claude Code plugin for Symfony 7.x development with specialized agents",
   "version": "1.0.0",
   "repository": "https://github.com/adamchrabaszcz/claude-marketplace",

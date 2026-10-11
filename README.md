@@ -4,23 +4,26 @@ A collection of Claude Code plugins for various frameworks and tools.
 
 ## Available Plugins
 
-### claude-symfony-plugin
+### symfony-developer
 
 A comprehensive Claude Code plugin for Symfony 7.x development featuring:
 
 - **symfony-7-developer agent**: An expert Symfony developer agent with deep knowledge of Symfony 7.x architecture, Doctrine ORM, testing, and best practices
 
 **Installation:**
-```bash
-claude /install-plugin https://github.com/adamchrabaszcz/claude-marketplace/plugins/claude-symfony-plugin
 ```
+/plugin marketplace add adamchrabaszcz/claude-marketplace
+/plugin install symfony-developer@adams-claude-marketplace
+```
+
+Renamed from `claude-symfony-plugin`, because names starting with `claude-` are reserved for Anthropic's own plugins. If you installed it under the old name, uninstall that (`/plugin uninstall claude-symfony-plugin@adams-claude-marketplace`) and install `symfony-developer`.
 
 ## Structure
 
 ```
 claude-marketplace/
 ├── plugins/
-│   └── claude-symfony-plugin/    # Symfony 7.x development plugin
+│   └── symfony-developer/        # Symfony 7.x development plugin
 │       ├── .claude-plugin/
 │       │   └── plugin.json
 │       └── agents/

@@ -1,5 +1,6 @@
 {
   "name": "adams-claude-marketplace",
+  "description": "Claude Code plugins by Adam Chrabąszcz: framework helpers and GitHub workflow skills.",
   "owner": {
     "name": "Adam Chrabaszcz",
     "email": "adam@chrabaszcz.pl",
@@ -7,8 +8,8 @@
   },
   "plugins": [
     {
-      "name": "claude-symfony-plugin",
-      "source": "./plugins/claude-symfony-plugin",
+      "name": "symfony-developer",
+      "source": "./plugins/symfony-developer",
       "description": "Claude Code plugin for Symfony 7.x development with specialized agents"
     }
   ]
