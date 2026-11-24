@@ -1,0 +1,19 @@
+{
+  "name": "github-steward",
+  "description": "Sets GitHub repositories up and keeps work in them tidy: plan first, an issue for every task, one small PR per change, Conventional Commits, checks before every report.",
+  "version": "0.1.0",
+  "repository": "https://github.com/adamchrabaszcz/claude-marketplace",
+  "author": {
+    "name": "Adam Chrabąszcz",
+    "email": "adam@chrabaszcz.pl",
+    "url": "https://github.com/adamchrabaszcz"
+  },
+  "keywords": [
+    "github",
+    "workflow",
+    "pull-requests",
+    "issues",
+    "conventional-commits",
+    "onboarding"
+  ]
+}
