@@ -63,4 +63,4 @@ To add a new plugin:
 
 ## License
 
-MIT
+[MIT](LICENSE): use, copy, change and share the plugins, including in your own work, as long as the licence and copyright notice stay with them.
