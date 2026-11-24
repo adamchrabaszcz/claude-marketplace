@@ -1,0 +1,30 @@
+name: Docs or chore
+description: "Docs, CI, tooling or dependencies; nothing changes for users"
+labels: [chore]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What and why
+      description: "What should change, and why."
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: "A short checklist that says when this is finished."
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: blast
+    attributes:
+      label: Blast radius
+      description: "Optional. What this could break (CI, releases, deploys, other contributors)."
+  - type: input
+    id: parent
+    attributes:
+      label: Parent
+      description: "Optional. The parent issue when this is one step of bigger work (e.g. #12); also add it as a sub-issue there."
