@@ -27,10 +27,8 @@ Sets GitHub repositories up and keeps work in them tidy. Language-agnostic; uses
   - An issue for every task, and one branch and one small PR per change, each from the latest `main` and mergeable on its own.
   - Checks and a self-review before committing; Conventional Commits; PRs that close their issue.
   - A test merge of all open PRs before reporting back.
-- **onboard** skill (coming): checks a repository and sets up what's missing:
-  - AGENTS.md, docs, CONTRIBUTING.md and README;
-  - labels, sidebar and branch protection;
-  - CI with coverage, and releases from Conventional Commits.
+- **onboard** skill: "let's start working on ABC" creates the repository, private or public, already set up: AGENTS.md, CONTRIBUTING, docs and decision records, issue and PR templates, CI, the format check, releases, the Claude review, Dependabot and the GitHub settings. It also audits an existing repository and fills what's missing.
+- **go-public** skill: takes a private repository public safely. It scans the whole history, every issue, pull request and comment (edit history included) for secrets and personal data, fills what a public repository needs, and turns on the public settings once you've switched.
 
 **Installation:**
 ```
