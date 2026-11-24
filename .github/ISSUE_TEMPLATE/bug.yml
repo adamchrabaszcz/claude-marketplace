@@ -1,0 +1,30 @@
+name: Bug
+description: "Something doesn't work as it should"
+labels: [bug]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What and why
+      description: "What happens, what should happen instead, where, and how to see it."
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: "A short checklist that says when this is fixed, including a test that would have caught it."
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: blast
+    attributes:
+      label: Blast radius
+      description: "Optional. Who is affected and how badly, and what a fix could touch."
+  - type: input
+    id: parent
+    attributes:
+      label: Parent
+      description: "Optional. The parent issue when this belongs to bigger work (e.g. #12); also add it as a sub-issue there."

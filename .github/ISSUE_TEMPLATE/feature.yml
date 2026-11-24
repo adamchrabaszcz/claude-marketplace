@@ -1,0 +1,30 @@
+name: Feature
+description: "Something new, or a change to how something works"
+labels: [enhancement]
+body:
+  - type: textarea
+    id: what
+    attributes:
+      label: What and why
+      description: "What should change, and why. Plain words; who it is for."
+    validations:
+      required: true
+  - type: textarea
+    id: done
+    attributes:
+      label: Done when
+      description: "A short checklist that says when this is finished, including its test."
+      value: |
+        - [ ]
+    validations:
+      required: true
+  - type: textarea
+    id: blast
+    attributes:
+      label: Blast radius
+      description: "Optional. What else this touches or could break, and who would notice."
+  - type: input
+    id: parent
+    attributes:
+      label: Parent
+      description: "Optional. The parent issue when this is one step of bigger work (e.g. #12); also add it as a sub-issue there."
