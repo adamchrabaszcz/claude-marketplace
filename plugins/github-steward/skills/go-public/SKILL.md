@@ -24,13 +24,15 @@ git fetch origin '+refs/pull/*/head:refs/remotes/origin/pr/*'
 
 Then search every commit on every branch, not just the working tree.
 
-- **Secrets,** printed redacted: a found secret never appears whole in the conversation (it would be one more copy). If `gitleaks` is installed, `gitleaks git --redact --log-opts="--all"`. Otherwise the pattern, with the value after the key masked:
+- **Secrets,** printed redacted: a found secret never appears whole in the conversation (it would be one more copy). If `gitleaks` is installed, `gitleaks git --redact --log-opts="--all"`. Otherwise the pattern (`key = …`, `"key": …` in JSON, `Bearer …`, and known token prefixes), with everything after the first `:` or `=` of a hit masked, so nothing later on the line can leak:
 
   ```sh
-  P='(api[_-]?key|secret|token|password|passwd|bearer|private[_-]?key)\s*[:=]|BEGIN [A-Z ]*PRIVATE KEY|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_|sk-ant-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[abpr]-'
+  P='(api[_-]?key|secret|token|password|passwd|private[_-]?key)["'"'"']?\s*[:=]|bearer\s+[A-Za-z0-9._~+/-]{8,}|BEGIN [A-Z ]*PRIVATE KEY|gh[pousr]_[A-Za-z0-9]{20,}|github_pat_|sk-ant-[A-Za-z0-9-]{10,}|sk-[A-Za-z0-9]{20,}|AKIA[0-9A-Z]{16}|xox[abpr]-'
   git log --all -G "$P" -i --format='%h %s' --name-only           # which commits and files
-  git log --all -p | grep -Ei "$P" | sed -E 's/(gh[pousr]_|github_pat_|sk-ant-|sk-|AKIA|xox[abpr]-)[A-Za-z0-9_-]{4,}/\1****/g; s/([:=][[:space:]]*["'"'"']?)[^"'"'"'[:space:]]{3}[^"'"'"'[:space:]]*/\1****/'
+  git log --all -p | grep -Ei "$P" | sed -E 's/(gh[pousr]_|github_pat_|sk-ant-|sk-|AKIA|xox[abpr]-)[A-Za-z0-9_-]{4,}/\1****/g; s/(bearer[[:space:]]+)[^[:space:]]+/\1****/Ig; s/([:=]).*$/\1 ****/'
   ```
+
+  A hit reads like `aws_access_key_id = ****` or `"password": ****`: what kind it is, not its value. To see the line itself, open the file at that commit in an editor, outside the conversation.
 
   Read each hit: `${{ secrets.X }}`, test keys signed in the tests, and badge tokens meant to be public are fine; anything else is a finding.
 - **Emails and authors:** `git log --all --format='%an <%ae>%n%cn <%ce>' | sort | uniq -c`, and `git log --all -p | grep -oEi '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}' | sort | uniq -c`. The owner's own address as commit author is normal (changing it means rewriting history); other real addresses in files are findings. `@example.com` is fine.
