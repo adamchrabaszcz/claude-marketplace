@@ -1,11 +1,13 @@
 ---
 name: onboard
-description: Use when the user wants to start a new project or repository on GitHub ("let's start working on ABC", "create a repo for …", "set up a new repository"). Creates github.com/<owner>/<name>, private or public, already set up - AGENTS.md, CONTRIBUTING, docs and decision records, issue and PR templates, CI with pinned actions, the format check, parent issues that close themselves, releases from Conventional Commits, the Claude review, Dependabot and the GitHub settings - and proves it with a first pull request.
+description: Use when the user wants to start a new project or repository on GitHub ("let's start working on ABC", "create a repo for …", "set up a new repository"), or to check an existing repository's setup ("audit this repo", "what's missing here", "bring this repo up to our setup"). Creates github.com/<owner>/<name>, private or public, already set up - AGENTS.md, CONTRIBUTING, docs and decision records, issue and PR templates, CI with pinned actions, the format check, parent issues that close themselves, releases from Conventional Commits, the Claude review, Dependabot and the GitHub settings - and proves it with a first pull request. For an existing repository, lists what's missing or out of date and fills each gap after a yes.
 ---
 
-# Onboard: start a repository set up the way we work
+# Onboard: start a repository set up the way we work, or audit one
 
 The files come from the plugin's `templates/` folder (`${CLAUDE_PLUGIN_ROOT}/templates`, two levels up from this skill). Read its `README.md` first: it lists every placeholder and what changes for a public repository.
+
+**A new repository:** steps 1 to 7. **An existing one:** "Audit an existing repository" at the end; it never overwrites, it reports and then fills one gap at a time.
 
 Every command that creates or changes something on GitHub is shown to the user before it runs, grouped so one yes covers a step.
 
@@ -113,8 +115,41 @@ A setup isn't done until a pull request has gone through it.
 
 Tell the user, in plain words: the repository's link; what was set up; anything skipped and why (a ruleset on a private repository, Codecov); what waits on them (merging the first PR). From here, changes follow the `deliver` skill.
 
+## Audit an existing repository
+
+The same setup, checked against what the repository already has. Existing files and choices win unless the user says otherwise: a repository can do something differently on purpose (its ADRs or CONTRIBUTING.md may say why). Read AGENTS.md, CONTRIBUTING.md and `docs/` first.
+
+### 1. Look, without changing anything
+
+`R=repos/<owner>/<name>`; note whether it's public (`gh repo view --json visibility`). Read files from the default branch as it is on GitHub (`git fetch`, then `git show origin/main:<path>` or `git ls-tree -r --name-only origin/main`), not from the working tree: a local checkout can be on an old branch and report gaps that aren't there.
+
+| Area | Look at | It's there when |
+| --- | --- | --- |
+| Agent and contributor docs | `AGENTS.md`, `CONTRIBUTING.md`, `README.md` | AGENTS.md has guardrails, checks and a "Code review" section; CONTRIBUTING has the workflow, definition of done, Conventional Commits and the issue format. No `CLAUDE.md` beside AGENTS.md (Claude Code reads AGENTS.md) |
+| Decisions and structure | `docs/architecture.md`, `docs/adr/` | both exist; ADRs follow the README's template |
+| Issue and PR templates | `.github/ISSUE_TEMPLATE/`, `pull_request_template.md` | forms write "What and why" and "Done when"; blank issues off; the PR template ends with `Closes #` |
+| CI | `.github/workflows/test.yml` | runs the project's checks on pull requests and on `main` |
+| Format, parent issues, releases | `format.yml`, `issues.yml`, `release.yml` | they call `adamchrabaszcz/github-steward-actions` (pinned); copied scripts doing the same job are a gap only if the user wants to switch (they're older and lack the shared actions' fixes) |
+| Claude review | `claude-review.yml`, `claude.yml`; `gh secret list -R …`; the latest review run | both workflows exist; the secret is set; a recent run on a pull request succeeded (a failure at the start means the app doesn't cover the repository or the token is missing) |
+| Pinning and Dependabot | every `uses:` in `.github/`; `.github/dependabot.yml` | each `uses:` is a 40-character SHA with `# vX.Y.Z`; Dependabot watches the actions, and the packages for security fixes |
+| Merge settings | `gh api $R --jq '{allow_squash_merge,allow_merge_commit,allow_rebase_merge,squash_merge_commit_title,squash_merge_commit_message,delete_branch_on_merge,allow_update_branch}'` | squash only, PR_TITLE and PR_BODY, branches deleted on merge |
+| Security features | `gh api $R --jq .security_and_analysis`; `gh api $R/private-vulnerability-reporting`; `gh api $R/vulnerability-alerts` (204 = on) | Dependabot alerts on; **public:** secret scanning, push protection, private reporting on |
+| Branch protection | `gh api $R/rulesets` | **public:** a ruleset on `main` requiring pull requests and the `test` and `pull-request` checks |
+| Public files | `LICENSE`, `SECURITY.md`, `CODE_OF_CONDUCT.md`, `.github/CODEOWNERS` | **public:** all four, and the README has a licence section |
+
+### 2. Report
+
+One table: each area **in place**, **different on purpose** (with where that's written), or **missing**, with what would fill it. Then the gaps in a suggested order, settings first (they're quick and reversible), then one pull request per file area. Ask which to do; "none" is a fine answer.
+
+### 3. Fill what the user picks
+
+- **Settings:** show the commands from step 4 that the gap needs, then run them.
+- **Files:** each gap is an issue and a pull request, as in the `deliver` skill. Start from the template, but fit it to the repository: keep what its existing files say, add what's missing, and fill `{{CODE_RULES}}` and `{{REVIEW_POINTS}}` from its real code. Never replace a file wholesale.
+- **The Claude review:** the app and the secret are the owner's (step 5).
+
 ## Never
 
 - Create a repository, change settings or visibility, or delete anything without showing the commands and getting a yes.
 - Ask for a token in the conversation, or write one into a file.
 - Leave a placeholder, a "TODO" or an empty section in the first commit.
+- In an audit, overwrite an existing file or undo a choice the repository made on purpose.
