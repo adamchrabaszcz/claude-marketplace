@@ -1,0 +1,29 @@
+name: format
+
+# The format of issues and pull requests (CONTRIBUTING.md, "Issues and pull requests"), checked
+# by the shared format action. A pull request without a Conventional Commit title or a
+# "Closes #n" line fails the pull-request check, which is required on main.
+on:
+  issues:
+    types: [opened, edited, reopened]
+  pull_request:
+    types: [opened, edited, reopened, synchronize]
+
+permissions:
+  contents: read
+
+jobs:
+  issue:
+    if: github.event_name == 'issues'
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write # the needs-format label and comment
+    steps:
+      - uses: adamchrabaszcz/github-steward-actions/format@735258dd549b212c92c664873667121c1b4e1a98 # v1.0.0
+
+  pull-request:
+    # Dependabot's pull requests have no issue to close; they're reviewed like any pull request.
+    if: github.event_name == 'pull_request' && github.event.pull_request.user.login != 'dependabot[bot]'
+    runs-on: ubuntu-latest
+    steps:
+      - uses: adamchrabaszcz/github-steward-actions/format@735258dd549b212c92c664873667121c1b4e1a98 # v1.0.0

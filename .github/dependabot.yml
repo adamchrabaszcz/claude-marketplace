@@ -1,0 +1,14 @@
+# Actions are pinned to commit SHAs (CONTRIBUTING.md, "Conventions"); Dependabot proposes updates
+# as one grouped pull request a week that keeps the pins and updates the version comments. The
+# marketplace has no packages, so only the actions are watched.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]

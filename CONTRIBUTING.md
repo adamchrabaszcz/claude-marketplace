@@ -32,16 +32,16 @@ Where things are written down: `AGENTS.md` (the short version, also for coding a
 
 `<type>(<optional scope>)<optional !>: <summary>`, summary in the imperative, lowercase, no full stop.
 
-| Type | For | Release |
-| --- | --- | --- |
-| `feat` | something new people can use | minor |
-| `fix` | a bug fix | patch |
-| `perf` | faster, same behaviour | patch |
-| `docs`, `test`, `refactor`, `style`, `build`, `ci`, `chore` | everything else | none |
+| Type | For |
+| --- | --- |
+| `feat` | something new people can use |
+| `fix` | a bug fix |
+| `perf` | faster, same behaviour |
+| `docs`, `test`, `refactor`, `style`, `build`, `ci`, `chore` | everything else |
 
 Scopes: the plugin's name (`github-steward`, `symfony-developer`).
 
-A change people must adapt to gets a `!` after the type and a `BREAKING CHANGE:` footer saying what they need to do. It makes a major release.
+A change people must adapt to gets a `!` after the type and a `BREAKING CHANGE:` footer saying what they need to do.
 
 ## Issues and pull requests
 
@@ -63,9 +63,9 @@ Optional. #n, when it is one step of bigger work (also add it as a sub-issue the
 
 Titles are plain words, no type prefix. `.github/workflows/format.yml` checks both: an issue missing "What and why" or "Done when" gets a `needs-format` label and a comment until it's fixed; a pull request without a Conventional Commit title or a `Closes #<issue>` line fails the check.
 
-## Releases
+## Versions
 
-After CI passes on `main`, `.github/workflows/release.yml` tags the commit and publishes a GitHub release if the merges since the last one shipped something (`feat`, `fix`, `perf` or a breaking change). Everything it shipped gets the version's milestone and a "Released in" comment.
+Each plugin has its own `version` in `.claude-plugin/plugin.json`, which is what Claude Code compares to offer an update. There are no repository-wide releases: how plugin versions move is being decided in [#30](https://github.com/adamchrabaszcz/claude-marketplace/issues/30).
 
 ## Checks
 
