@@ -13,6 +13,7 @@ Claude Code reads `.claude-plugin/marketplace.json` when someone runs `/plugin m
 | `plugins/symfony-developer/agents/` | An agent for Symfony 7 development |
 | `plugins/github-steward/skills/deliver/` | A skill: taking a change from plan to a pull request ready to merge |
 | `plugins/github-steward/skills/onboard/` | A skill: starting a repository set up this way, or auditing one |
+| `plugins/github-steward/skills/go-public/` | A skill: taking a private repository public, after scanning everything that becomes visible |
 | `plugins/github-steward/templates/` | The files `onboard` writes into a repository; `README.md` lists the placeholders and pinned versions |
 | `.github/workflows/` | CI and the Claude review |
 | `docs/` | This file and the decision records |
