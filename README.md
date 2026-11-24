@@ -54,12 +54,7 @@ claude-marketplace/
 
 ## Contributing
 
-To add a new plugin:
-
-1. Create a new directory under `plugins/`
-2. Add a `.claude-plugin/plugin.json` manifest
-3. Add your agents, skills, hooks, or commands
-4. Submit a pull request
+Contributions are welcome; [`CONTRIBUTING.md`](CONTRIBUTING.md) has the workflow and how to add a plugin, and [`AGENTS.md`](AGENTS.md) the short version for coding agents. Everyone taking part follows the [Code of Conduct](CODE_OF_CONDUCT.md). Security problems: [`SECURITY.md`](SECURITY.md), reported privately, not in issues.
 
 ## License
 
