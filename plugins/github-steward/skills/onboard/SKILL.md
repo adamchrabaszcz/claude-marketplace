@@ -37,8 +37,12 @@ This is the one commit that goes straight to `main`: a new repository has nothin
 
 1. Copy `templates/base/` into the repository, then `templates/public/` on top for a public one (its files replace base ones at the same path).
 2. Fill every `{{PLACEHOLDER}}`. GitHub's own `${{ … }}` expressions stay. For a public repository, add the licence section to the README and the welcome paragraph to CONTRIBUTING.md (templates README).
-3. Read every file through once: it must read as written for this project. Cut what doesn't apply (no scopes yet, no stack to set up), don't leave it empty.
-4. Check: `grep -rn '{{[A-Z_]*}}' .` finds nothing, and every `.yml` under `.github/` parses.
+3. Read every file through once: it must read as written for this project. Cut what doesn't apply, don't leave it empty. The usual case is **a stack but no code yet**:
+   - no setup command: drop that line from the command blocks in AGENTS.md, CONTRIBUTING.md and the README;
+   - no package manifest yet: drop the package ecosystem from `dependabot.yml` (it fails on a missing manifest) and add it with the first dependency;
+   - the test step runs the stack's test command, which passes with no tests (`node --test` does), or the "nothing to test yet" step from the templates README;
+   - no scopes: drop the "Scopes:" line.
+4. Check: `grep -rn '{{[A-Z_]*}}' .` finds nothing; no line is left as a bare `Scopes: .` and no code block is empty or starts with a blank line; every `.yml` under `.github/` parses.
 5. Commit as `chore: repository setup: docs, CI and the Claude review` (with the user's attribution rules, if any) and push.
 
 ## 4. Settings
@@ -101,9 +105,9 @@ Then check: `gh secret list -R <owner>/<name>` lists it.
 A setup isn't done until a pull request has gone through it.
 
 1. An issue in the repository's format: "README: how to run it", or the first real task if the user has one.
-2. A branch, a small change (with its test if there's code), a PR whose title is a Conventional Commit and whose description ends with `Closes #<issue>`.
-3. Watch the checks: `test` and `pull-request` pass; `review` runs and posts a checklist. A review job that fails at the start usually means the app or the token is missing (step 5).
-4. Merging is the user's. A docs PR makes no release; the first `feat` or `fix` will.
+2. A branch, a small change (with its test if there's code), a PR whose title is a Conventional Commit and whose description ends with `Closes #<issue>`. New files go into the layout table in `docs/architecture.md` in the same PR; the review checks it.
+3. Watch the checks: `test` and `pull-request` pass; `review` runs and posts a checklist. A review job that fails at the start usually means the app or the token is missing (step 5). Its findings are handled as in the `deliver` skill: real bugs fixed, polish brought to the user.
+4. Merging is the user's. A docs PR makes no release; the first `feat` or `fix` will (`v0.1.0` unless `first-version` is set in `release.yml`), and the issue and PR get its milestone and a "Released in" comment.
 
 ## 7. Report
 
