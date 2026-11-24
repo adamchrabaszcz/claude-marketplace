@@ -30,6 +30,11 @@ Sets GitHub repositories up and keeps work in them tidy. Language-agnostic; uses
 - **onboard** skill: "let's start working on ABC" creates the repository, private or public, already set up: AGENTS.md, CONTRIBUTING, docs and decision records, issue and PR templates, CI, the format check, releases, the Claude review, Dependabot and the GitHub settings. It also audits an existing repository and fills what's missing.
 - **go-public** skill: takes a private repository public safely. It scans the whole history, every issue, pull request and comment (edit history included) for secrets and personal data, fills what a public repository needs, and turns on the public settings once you've switched.
 
+**Needs:**
+- The [`gh`](https://cli.github.com) CLI, logged in with the `repo` and `workflow` scopes.
+- For the Claude review in the repositories it sets up: the [Claude GitHub App](https://github.com/apps/claude) covering them, and a token from `claude setup-token` set as each repository's `CLAUDE_CODE_OAUTH_TOKEN` secret. The skill asks for both when it gets there; the token is typed at a prompt, never pasted into the chat.
+- On GitHub's free plan, private repositories share 2,000 Actions minutes a month (CI and the review both count), and can't have a branch ruleset. Public repositories have neither limit.
+
 **Installation:**
 ```
 /plugin marketplace add adamchrabaszcz/claude-marketplace
