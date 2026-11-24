@@ -1,0 +1,22 @@
+# Actions are pinned to commit SHAs (CONTRIBUTING.md, "Conventions"); Dependabot proposes updates
+# as one grouped pull request a week that keeps the pins and updates the version comments. The
+# project's packages get security updates only (a limit of 0 opens no version updates), with the
+# build prefix and Dependabot able to rebase them.
+version: 2
+updates:
+  - package-ecosystem: github-actions
+    directory: /
+    schedule:
+      interval: weekly
+    commit-message:
+      prefix: ci
+    groups:
+      actions:
+        patterns: ["*"]
+  - package-ecosystem: {{ECOSYSTEM}}
+    directory: /
+    schedule:
+      interval: weekly
+    open-pull-requests-limit: 0
+    commit-message:
+      prefix: build
