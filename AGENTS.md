@@ -43,6 +43,7 @@ claude plugin validate .
 
 - **Manifests:** every plugin is listed in `.claude-plugin/marketplace.json` and has `.claude-plugin/plugin.json`; `claude plugin validate .` passes.
 - **Reserved names:** plugin names don't start with `claude-` or `anthropic-`.
+- **No `version`** in a plugin's `plugin.json` or marketplace entry: plugins follow `main` (`docs/adr/0002-plugins-follow-main.md`). A `version` would freeze every user on it until someone bumps it.
 - **Generic content:** skills, agents and templates are for anyone; nothing from a particular project, person or machine.
 - **Skills:** frontmatter with `name` and a `description` saying when to use it; the body is steps Claude can follow in the middle of a task, with the exact commands.
 - **Templates:** every `{{PLACEHOLDER}}` is listed in `templates/README.md`; every `uses:` is pinned to a commit SHA with the version in a comment.

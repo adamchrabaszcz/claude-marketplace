@@ -27,3 +27,4 @@ What becomes easier, what becomes harder, what we now have to keep doing.
 ## Records
 
 - [0001. Record architecture decisions](0001-record-architecture-decisions.md)
+- [0002. Plugins follow main: no version numbers, no releases](0002-plugins-follow-main.md)

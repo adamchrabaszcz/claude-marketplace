@@ -9,7 +9,7 @@ Claude Code reads `.claude-plugin/marketplace.json` when someone runs `/plugin m
 | Path | What |
 | --- | --- |
 | `.claude-plugin/marketplace.json` | The marketplace: its name, owner and one entry per plugin (`name`, `source`, `description`) |
-| `plugins/<name>/.claude-plugin/plugin.json` | A plugin's manifest: name, description, version, author, repository |
+| `plugins/<name>/.claude-plugin/plugin.json` | A plugin's manifest: name, description, author, repository. No version: Claude Code uses the last commit that changed the plugin's folder |
 | `plugins/symfony-developer/agents/` | An agent for Symfony 7 development |
 | `plugins/github-steward/skills/deliver/` | A skill: taking a change from plan to a pull request ready to merge |
 | `plugins/github-steward/skills/onboard/` | A skill: starting a repository set up this way, or auditing one |
