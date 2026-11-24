@@ -26,7 +26,7 @@ Fetch everything first (`git fetch --all --tags`), then search every commit on e
   Read each hit: `${{ secrets.X }}`, test keys signed in the tests, and badge tokens meant to be public are fine; anything else is a finding.
 - **Emails and authors:** `git log --all --format='%an <%ae>%n%cn <%ce>' | sort | uniq -c`, and `git log --all -p | grep -oEi '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}' | sort | uniq -c`. The owner's own address as commit author is normal (changing it means rewriting history); other real addresses in files are findings. `@example.com` is fine.
 - **The extra terms** from step 1: `git log --all -p | grep -niE '<term>|<term>'`.
-- **Files that were deleted** are still in history: `comm -13 <(git ls-files | sort) <(git log --all --name-only --format= | sort -u)` lists them; look at any that might hold data (`.env`, exports, dumps).
+- **Files not in the current checkout** are still public: `comm -13 <(git ls-files | sort) <(git log --all --name-only --format= | sort -u)` lists files that were deleted, or that exist only on another branch. Look at any that might hold data (`.env`, exports, dumps, notes).
 
 ## 3. Scan issues, pull requests and comments
 
