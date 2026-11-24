@@ -1,0 +1,49 @@
+name: claude
+
+# Answers "@claude" in issue comments, pull request review comments and reviews, e.g.
+# "@claude review" for another pass after new commits. Only the owner, members and
+# collaborators can trigger it (checked in the job's `if:` below, and by the action). It reads
+# the code and comments; it can't push. Runs on the owner's Claude subscription (secret CLAUDE_CODE_OAUTH_TOKEN). Based on the
+# action's official example examples/claude.yml.
+on:
+  issue_comment:
+    types: [created]
+  pull_request_review_comment:
+    types: [created]
+  pull_request_review:
+    types: [submitted]
+
+permissions:
+  contents: read
+
+jobs:
+  claude:
+    # Only the owner, members and collaborators: the repository is public and this runs on the
+    # owner's subscription. The action checks write access too; this holds even if its default
+    # changes.
+    if: |
+      (github.event_name == 'issue_comment' && contains(github.event.comment.body, '@claude') &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review_comment' && contains(github.event.comment.body, '@claude') &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association)) ||
+      (github.event_name == 'pull_request_review' && contains(github.event.review.body, '@claude') &&
+        contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association))
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      pull-requests: write
+      issues: write
+      id-token: write
+      actions: read # to read CI results on pull requests
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          fetch-depth: 1
+      - name: Run Claude Code
+        uses: anthropics/claude-code-action@acfe7992852970efb4fee683d63d628e3e52df67 # v1.0.286
+        with:
+          claude_code_oauth_token: ${{ secrets.CLAUDE_CODE_OAUTH_TOKEN }}
+          # Same model and cap as the automatic review (claude-review.yml).
+          claude_args: |
+            --model opus
+            --max-turns 30
