@@ -1,1 +1,5 @@
 blank_issues_enabled: false
+contact_links:
+  - name: Report a security problem
+    url: https://github.com/adamchrabaszcz/claude-marketplace/security/advisories/new
+    about: Privately, not in a public issue (SECURITY.md).
