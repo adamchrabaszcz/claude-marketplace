@@ -1,0 +1,18 @@
+name: issues
+
+# Work that takes several pull requests is a parent issue with a sub-issue per step; each pull
+# request closes its sub-issue. This closes the parent once its last sub-issue is closed.
+on:
+  issues:
+    types: [closed]
+
+permissions:
+  contents: read
+
+jobs:
+  close-parent:
+    runs-on: ubuntu-latest
+    permissions:
+      issues: write # closing the parent
+    steps:
+      - uses: adamchrabaszcz/github-steward-actions/close-parent@735258dd549b212c92c664873667121c1b4e1a98 # v1.0.0
