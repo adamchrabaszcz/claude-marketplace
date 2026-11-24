@@ -16,7 +16,8 @@ The repository's own `AGENTS.md`, `CONTRIBUTING.md` and `docs/` win wherever the
 ## 2. Split the request, one issue each
 
 - List the separate changes in the request. **Each one is one issue and one pull request.** Three things asked in one message means three PRs.
-- Find the issue, or create it: `gh issue create --title "<plain words>" --label enhancement|bug|documentation --body "<what and why>"`.
+- Find the issue, or create it: `gh issue create --title "<plain words>" --label enhancement|bug|documentation --body "<what and why>"`, in the repository's issue format if it has one (CONTRIBUTING.md).
+- **Work that takes several pull requests** is a parent issue with a GitHub sub-issue per step (`gh api -X POST repos/<owner>/<repo>/issues/<parent>/sub_issues -F sub_issue_id=<id>`). Each pull request closes its own sub-issue; the parent closes when the last one does.
 - Ideas that aren't planned yet are issues too. The roadmap is the issue list, never a section in the docs.
 
 ## 3. Build one change
@@ -35,7 +36,7 @@ The repository's own `AGENTS.md`, `CONTRIBUTING.md` and `docs/` win wherever the
 
 ## 4. Commit and open the pull request
 
-- **Conventional Commits:** `type(optional scope)!: subject in the imperative`, a body saying why, and a footer `Closes #<issue>`, or `Part of #<issue>` for one step of several. The type matters: if the repository releases from commits, it decides the version (`feat` minor, `fix`/`perf` patch, `!` or a `BREAKING CHANGE:` footer major).
+- **Conventional Commits:** `type(optional scope)!: subject in the imperative`, a body saying why, and a footer `Closes #<issue>`. Every pull request closes exactly one issue; a step of bigger work closes its sub-issue. The type matters: if the repository releases from commits, it decides the version (`feat` minor, `fix`/`perf` patch, `!` or a `BREAKING CHANGE:` footer major).
 - Follow the repository's commit attribution rules, if it has any.
 - Push the branch and open the PR with `gh pr create`. The body says:
   - **what changes**, in plain words a reviewer who wasn't there can follow;
@@ -43,7 +44,15 @@ The repository's own `AGENTS.md`, `CONTRIBUTING.md` and `docs/` win wherever the
   - **anything the user must do**: secrets to add, settings, merge order;
   - `Closes #<issue>`.
 
-## 5. Before reporting back
+## 5. When the pull request gets reviewed
+
+If the repository has an automated review (a Claude review workflow, or another bot), read its findings once it's done and sort them:
+
+- **Bugs** (marked blocking or should fix, and real: the wrong thing touched, broken input, a missed case that matters): fix them in the same PR, each with a test that fails without the fix, and reply to each comment with what changed.
+- **Polish** (nits, "none blocks merging"): don't do them all by default. List them for the user with a recommendation, often "skip"; fix the ones they pick. A pull request that grows with every nit gets harder to review and to keep.
+- Update the PR description when the change grew: with squash merges it becomes the commit message.
+
+## 6. Before reporting back
 
 - **Test-merge every open PR together:** a temporary branch from main, merge each open branch, run the checks, then delete the temporary branch. If two collide, move one change elsewhere in its own branch and push again. Don't stack branches.
 - Tell the user in plain language:
@@ -51,10 +60,11 @@ The repository's own `AGENTS.md`, `CONTRIBUTING.md` and `docs/` win wherever the
   - what each PR does;
   - what waits on them: merging, the order, secrets, settings, open questions.
 
-## 6. After a merge
+## 7. After a merge
 
 - `git checkout main && git pull`. Delete merged local branches, and remote ones too if GitHub doesn't delete them on merge (offer to switch that setting on).
 - Check the issues the PR closed are closed, and pick up anything that was waiting for this merge.
+- **Dependabot's pull requests** are the one exception to "every PR closes an issue". Before they merge, rename the title to the repository's style (`ci: bump checkout to v7.0.1`), since the squash commit takes it. If one fails a check its base branch predates, update it from main (`gh pr update-branch`) rather than asking Dependabot to rebase.
 
 ## Never
 
