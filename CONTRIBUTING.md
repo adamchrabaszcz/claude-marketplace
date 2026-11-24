@@ -65,7 +65,7 @@ Titles are plain words, no type prefix. `.github/workflows/format.yml` checks bo
 
 ## Versions
 
-Plugins have no `version` field: each follows `main` (`docs/adr/0002-plugins-follow-main.md`). Claude Code takes a plugin's version from the last commit that changed its folder, so merging a pull request that changes a plugin is its release, and `/plugin update` delivers it. Other plugins don't move. There are no tags or releases, and nothing to bump.
+Plugins have no `version` field: each follows `main` (`docs/adr/0002-plugins-follow-main.md`). Claude Code takes a plugin's version from the commit of its folder, so merging a pull request that changes a plugin is its release, and `/plugin update` delivers it; other plugins shouldn't move. There are no tags or releases, and nothing to bump. CI fails if a `version` comes back.
 
 ## Checks
 

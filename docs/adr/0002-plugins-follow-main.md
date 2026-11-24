@@ -16,7 +16,8 @@ No `version` in any plugin's `plugin.json` or marketplace entry. Every merge to 
 
 ## Consequences
 - A fix reaches users on their next update after the merge; nothing to remember.
-- A change to one plugin doesn't move another's version, since each follows its own folder.
+- A change to one plugin should not move another's version, since each follows its own folder. The docs' wording ("the commit SHA of the installed directory") supports this without saying it outright; the first pull request that changes only one plugin confirms it. If every merge moves every plugin instead, nothing breaks: an unchanged plugin just reinstalls the same content.
+- CI fails if a `version` comes back in a manifest or a marketplace entry (`test.yml`).
 - `main` is what ships, so it only changes through pull requests that pass `claude plugin validate`, the format check and the review (the `main` ruleset).
 - `claude plugin validate` warns "No version specified" for each plugin. That's general advice, not an error (it still passes); the warning is expected here and isn't fixed by adding a version.
 - Users can't pin an older version. A plugin that needs that can add `version` back, superseding this record for it.
