@@ -22,3 +22,13 @@ jobs:
         run: npm install --global @anthropic-ai/claude-code@2.1.289
       - name: Validate the marketplace and its plugins
         run: claude plugin validate .
+      - name: No plugin version (docs/adr/0002-plugins-follow-main.md)
+        # A version would freeze every user on it until someone bumps it. Explicit ifs, because
+        # bash -e ignores a failing command that starts with "!".
+        run: |
+          if jq -e '.plugins[] | select(has("version"))' .claude-plugin/marketplace.json >/dev/null; then
+            echo "::error file=.claude-plugin/marketplace.json::A plugin entry has a version; plugins follow main (docs/adr/0002)."; exit 1
+          fi
+          if grep -l '"version"' plugins/*/.claude-plugin/plugin.json; then
+            echo "::error::The plugin.json files above have a version; plugins follow main (docs/adr/0002)."; exit 1
+          fi

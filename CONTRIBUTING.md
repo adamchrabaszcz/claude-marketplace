@@ -65,7 +65,7 @@ Titles are plain words, no type prefix. `.github/workflows/format.yml` checks bo
 
 ## Versions
 
-Each plugin has its own `version` in `.claude-plugin/plugin.json`, which is what Claude Code compares to offer an update. There are no repository-wide releases: how plugin versions move is being decided in [#30](https://github.com/adamchrabaszcz/claude-marketplace/issues/30).
+Plugins have no `version` field: each follows `main` (`docs/adr/0002-plugins-follow-main.md`). Claude Code takes a plugin's version from the commit of its folder, so merging a pull request that changes a plugin is its release, and `/plugin update` delivers it; other plugins shouldn't move. There are no tags or releases, and nothing to bump. CI fails if a `version` comes back.
 
 ## Checks
 
@@ -78,7 +78,7 @@ A change to a skill is also tried once by hand, on a real task, before the pull 
 
 ## Adding a plugin
 
-1. A folder `plugins/<name>/` with `.claude-plugin/plugin.json` (name, description, version, author, repository). The name doesn't start with `claude-` or `anthropic-`, which are reserved.
+1. A folder `plugins/<name>/` with `.claude-plugin/plugin.json` (name, description, author, repository; no `version`, see Versions). The name doesn't start with `claude-` or `anthropic-`, which are reserved.
 2. Its skills (`skills/<skill>/SKILL.md`), agents, hooks or commands.
 3. An entry in `.claude-plugin/marketplace.json` and a section in the README with what it does and how to install it.
 

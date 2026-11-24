@@ -1,7 +1,6 @@
 {
   "name": "github-steward",
   "description": "Sets GitHub repositories up and keeps work in them tidy: plan first, an issue for every task, one small PR per change, Conventional Commits, checks before every report.",
-  "version": "0.1.0",
   "repository": "https://github.com/adamchrabaszcz/claude-marketplace",
   "author": {
     "name": "Adam Chrabąszcz",
