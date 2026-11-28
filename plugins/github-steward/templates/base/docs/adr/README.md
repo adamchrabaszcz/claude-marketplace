@@ -27,3 +27,5 @@ What becomes easier, what becomes harder, what we now have to keep doing.
 ## Records
 
 - [0001. Record architecture decisions](0001-record-architecture-decisions.md)
+- [0002. Plans stay out of the repository](0002-plans-stay-out-of-the-repository.md)
+- [0003. Modular code that follows SOLID](0003-modular-solid-code.md)

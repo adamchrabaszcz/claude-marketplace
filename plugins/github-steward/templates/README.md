@@ -28,7 +28,7 @@ The skill fills the placeholders below (`{{UPPER_CASE}}`; GitHub's own `${{ … 
 | `{{CODE_RULES}}` | AGENTS.md bullets: the project's rules that bite (bullets) | |
 | `{{REVIEW_POINTS}}` | AGENTS.md "Code review" bullets: what CI can't see here (bullets) | |
 | `{{YEAR}}`, `{{COPYRIGHT_HOLDER}}` | For `LICENSE` | `2026`, `Ada Example` |
-| `{{DATE}}` | Today, for ADR 0001 | `2026-11-24` |
+| `{{DATE}}` | Today, for ADRs 0001–0003 | `2026-11-24` |
 
 `{{CODE_RULES}}` and `{{REVIEW_POINTS}}` come from reading the code (or, for a new repository, from what the owner says it will be). Start small: three to five bullets each, the things that would hurt if broken. They grow with the project.
 

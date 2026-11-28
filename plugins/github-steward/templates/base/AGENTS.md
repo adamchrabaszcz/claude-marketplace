@@ -19,7 +19,7 @@ This file is the rulebook for coding agents. The details are in `CONTRIBUTING.md
 - **Commit and pull request title:** a Conventional Commit; the type decides the release (`CONTRIBUTING.md`).
 - **Tests:** every change adds or updates a test that fails without it.
 - **Docs the change makes wrong:** update them in the same pull request.
-- **Working notes and plans:** in `.plan/` (ignored by git).
+- **Working notes and plans:** in `.plan/` (ignored by git), never in the repository; what comes out of them goes into ADRs and issues (`docs/adr/0002`).
 
 ## Ask first
 
@@ -45,6 +45,7 @@ This file is the rulebook for coding agents. The details are in `CONTRIBUTING.md
 ## Code rules that bite
 
 {{CODE_RULES}}
+- **Modular code (`docs/adr/0003`):** one job per module and function, settings passed in with defaults, I/O at the edges, one source per shape; split a file before it keeps growing.
 - GitHub Actions are pinned to a full commit SHA with the version in a comment.
 
 ## Code review
@@ -52,6 +53,8 @@ This file is the rulebook for coding agents. The details are in `CONTRIBUTING.md
 Claude reviews each pull request when it's opened or marked ready (`.github/workflows/claude-review.yml`); `@claude review` in a comment asks for another pass (only the owner, members and collaborators can start it). When reviewing, look first at what CI can't see:
 
 {{REVIEW_POINTS}}
+- **Modular code (`docs/adr/0003`):** a module or function doing several jobs, a hard-coded setting that will be tuned, a shape written out twice, or I/O mixed into the logic.
+- **No plan files (`docs/adr/0002`):** a pull request that adds a plan to the repository instead of ADRs and issues.
 - **Tests:** a change without a test that fails without it.
 - **No personal data or secrets** in code, tests, docs or examples.
 
