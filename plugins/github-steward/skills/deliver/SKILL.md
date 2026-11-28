@@ -9,7 +9,7 @@ The repository's own `AGENTS.md`, `CONTRIBUTING.md` and `docs/` win wherever the
 
 ## 1. Plan before building
 
-- **Something not fully specified** (a design choice, wording, where a control goes, a trade-off): write a short plan in `.plan/<topic>.md`. Make sure `.plan/` is git-ignored. List what will change and the decisions to make, give a recommendation for each, and **wait for the user's answers**. Record the answers in the plan.
+- **Something not fully specified** (a design choice, wording, where a control goes, a trade-off): write a short plan in `.plan/<topic>.md`. Make sure `.plan/` is git-ignored; plans never go into the repository (the template's ADR 0002), only what comes out of them: decisions into ADRs, the roadmap and requirements into issues. List what will change and the decisions to make, give a recommendation for each, and **wait for the user's answers**. Record the answers in the plan.
 - **Small, unambiguous fixes** don't need a plan. Say what you'll do and do it.
 - **Decisions belong on the issue too**: add them as a comment, so they outlive the conversation.
 

@@ -126,7 +126,7 @@ The same setup, checked against what the repository already has. Existing files 
 | Area | Look at | It's there when |
 | --- | --- | --- |
 | Agent and contributor docs | `AGENTS.md`, `CONTRIBUTING.md`, `README.md` | AGENTS.md has guardrails, checks and a "Code review" section; CONTRIBUTING has the workflow, definition of done, Conventional Commits and the issue format. No `CLAUDE.md` beside AGENTS.md (Claude Code reads AGENTS.md) |
-| Decisions and structure | `docs/architecture.md`, `docs/adr/` | both exist; ADRs follow the README's template |
+| Decisions and structure | `docs/architecture.md`, `docs/adr/` | both exist; ADRs follow the README's template; the repository has the two standing decisions (plans stay in `.plan/`, modular SOLID code) as ADRs, whatever their numbers; no plan file in `docs/` |
 | Issue and PR templates | `.github/ISSUE_TEMPLATE/`, `pull_request_template.md` | forms write "What and why" and "Done when"; blank issues off; the PR template ends with `Closes #` |
 | CI | `.github/workflows/test.yml` | runs the project's checks on pull requests and on `main` |
 | Format, parent issues, releases | `format.yml`, `issues.yml`, `release.yml` | they call `adamchrabaszcz/github-steward-actions` (pinned); copied scripts doing the same job are a gap only if the user wants to switch (they're older and lack the shared actions' fixes) |
